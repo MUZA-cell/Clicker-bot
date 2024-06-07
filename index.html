@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #points {
+            font-size: 2em;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+        }
+    </style>
+    <script>
+        let points = 0;
+        function clickButton() {
+            points += 1;
+            document.getElementById("points").innerText = points;
+        }
+        function sendPointsToBot() {
+            const user_id = new URLSearchParams(window.location.search).get('user_id');
+            fetch(`https://yourserver.com/update_points?user_id=${user_id}&points=${points}`)
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Clicker Game</h1>
+    <button onclick="clickButton()">Click Me!</button>
+    <p>Points: <span id="points">0</span></p>
+    <button onclick="sendPointsToBot()">Save Points</button>
+</body>
+</html>
